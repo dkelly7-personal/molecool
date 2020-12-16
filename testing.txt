@@ -1,1 +1,9 @@
+********************************************
+This is the start of testing.txt
+********************************************
+
 New file for testing pushing and pulling from new clone.
+
+********************************************
+This is the end of testing.txt
+********************************************
