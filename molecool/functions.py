@@ -33,38 +33,14 @@ def canvas(with_attribution=True):
         quote += "\n\t- Adapted from Henry David Thoreau"
     return quote
 
-def zen(with_attribution=True):
-    quote = """Beautiful is better than ugly.
-    Explicit is better than implicit.
-    Simple is better than complex.
-    Complex is better than complicated.
-    Flat is better than nested.
-    Sparse is better than dense.
-    Readability counts.
-    Special cases aren't special enough to break the rules.
-    Although practicality beats purity.
-    Errors should never pass silently.
-    Unless explicitly silenced.
-    In the face of ambiguity, refuse the temptation to guess.
-    There should be one-- and preferably only one --obvious way to do it.
-    Although that way may not be obvious at first unless you're Dutch.
-    Now is better than never.
-    Although never is often better than *right* now.
-    If the implementation is hard to explain, it's a bad idea.
-    If the implementation is easy to explain, it may be a good idea.
-    Namespaces are one honking great idea -- let's do more of those!"""
-
-    if with_attribution:
-      quote += "\n\tTim Peters"
-
-    return quote
-
 def calculate_distance(rA, rB):
+    # This function calculates the distance between two points given as numpy arrays.
     d=(rA-rB)
     dist=np.linalg.norm(d)
     return dist
 
 def open_pdb(f_loc):
+    # This function reads in a pdb file and returns the atom names and coordinates.
     with open(f_loc) as f:
         data = f.readlines()
     c = []
@@ -100,6 +76,7 @@ def open_xyz(file_location):
 
 def write_xyz(file_location, symbols, coordinates):
     
+    # Write an xyz file given a file location, symbols, and coordinates.
     num_atoms = len(symbols)
     
     with open(file_location, 'w+') as f:
@@ -111,6 +88,8 @@ def write_xyz(file_location, symbols, coordinates):
                                               coordinates[i,0], coordinates[i,1], coordinates[i,2]))
 
 def draw_molecule(coordinates, symbols, draw_bonds=None, save_location=None, dpi=300):
+    
+    # Draw a picture of a molecule using matplotlib.
     
     # Create figure
     fig = plt.figure()
@@ -134,8 +113,6 @@ def draw_molecule(coordinates, symbols, draw_bonds=None, save_location=None, dpi
             
             ax.plot(coordinates[[atom1,atom2], 0], coordinates[[atom1,atom2], 1],
                     coordinates[[atom1,atom2], 2], color='k')
-            
-    plt.axis('square')
     
     # Save figure
     if save_location:
@@ -144,6 +121,8 @@ def draw_molecule(coordinates, symbols, draw_bonds=None, save_location=None, dpi
     return ax
 
 def calculate_angle(rA, rB, rC, degrees=False):
+    # Calculate the angle between three points. Answer is given in radians by default, but can be given in degrees
+    # by setting degrees=True
     AB = rB - rA
     BC = rB - rC
     theta=np.arccos(np.dot(AB, BC)/(np.linalg.norm(AB)*np.linalg.norm(BC)))
@@ -154,6 +133,8 @@ def calculate_angle(rA, rB, rC, degrees=False):
         return theta
 
 def bond_histogram(bond_list, save_location=None, dpi=300, graph_min=0, graph_max=2):
+    # Draw a histogram of bond lengths based on a bond_list (output from build_bond_list function)
+    
     
     lengths = []
     for atoms, bond_length in bond_list.items():
@@ -178,7 +159,7 @@ def bond_histogram(bond_list, save_location=None, dpi=300, graph_min=0, graph_ma
         
 def build_bond_list(coordinates, max_bond=1.5, min_bond=0):
     
-    # Find the bonds in a molecule
+    # Find the bonds in a molecule (set of coordinates) based on distance criteria.
     bonds = {}
     num_atoms = len(coordinates)
 
@@ -201,6 +182,7 @@ atom_colors = {
     'Br': '#F4A460',
     'S': 'yellow'
 }
+
 
 if __name__ == "__main__":
     # Do something if this file is invoked on its own
